@@ -3,38 +3,33 @@ import React, { useState } from 'react';
 import Logo from '../../../assets/images/images.jpg'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import SocialSignInButton from '../../components/SocialSignInButtons/SocialSignInButton';
-const ConfirmEmailScreen = () => {
-    const [code,setCode] = useState('');
-    const onConfirmPressed =()=>{
+
+const ForgotPasswordScreen = () => {
+    const [userName,setUserName] = useState('');
+    const onSendPressed =()=>{
         console.warn("pressed")
     }
-    const onResendPressed =()=>{
-      console.warn("pressed")
-  }
+
   const onSignInPressed =()=>{
     console.warn("pressed")
 } 
   return (
   <ScrollView showsVerticalScrollIndicator={false} >
     <View style={styles.root} >
-    <Text style={styles.title}>Create an account</Text>
+    <Text style={styles.title}>Reset your password</Text>
      <Image source={Logo}
       style={[styles.logo,{height:height*0.3}]} 
       resizeMode='contain'/>
      <CustomInput
        placeholder="Enter your confirmation code"
-       value={code}
-       setValue={setCode}
+       value={userName}
+       setValue={setUserName}
       />
 
-      <CustomButton text="Submit" 
-       onPress={onConfirmPressed}
+      <CustomButton text="Send" 
+       onPress={onSendPressed}
        />
-       <CustomButton 
-      text="Resend code" 
-      onPress={onResendPressed}
-       type="SECONDARY" />
+      
            <CustomButton 
       text="Back To Sign in" 
       onPress={onSignInPressed}
@@ -64,4 +59,4 @@ const ConfirmEmailScreen = () => {
   
 
 
-export default ConfirmEmailScreen
+export default ForgotPasswordScreen
