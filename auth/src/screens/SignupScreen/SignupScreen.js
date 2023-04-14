@@ -1,34 +1,31 @@
-import { View,  Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import { View,  Image, StyleSheet, useWindowDimensions, ScrollView, Text } from 'react-native';
 import React, { useState } from 'react';
 import Logo from '../../../assets/images/images.jpg'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import SocialSignInButton from '../../components/SocialSignInButtons/SocialSignInButton';
 const SignupScreen = () => {
     const height = useWindowDimensions();
     const [userName,setUserName] = useState('');
     const [password,setPassword] = useState('');
+    const [confirmPassword,setConfirmPassword] = useState('');
+    const [email,setEmail] = useState('');
+    const onRegisterPressed =()=>{
+        console.warn("pressed")
+    }
     const onSignInPressed =()=>{
         console.warn("pressed")
     }
-    const onSignInFacebook =()=>{
-        console.warn("pressed")
+    const onTermsOfUsePressed =()=>{
+        console.warn("onTermsOfUsePressed")
     }
-    const onSignInGoogle =()=>{
-        console.warn("pressed")
-    } 
-    const onSignInApple =()=>{
-        console.warn("pressed")
-    }
-
-    const onForgotPasswordPressed =()=>{
-        console.warn("pressed")
-    }
-    const onSignUpPressed =()=>{
-        console.warn("pressed")
+    const onPrivacyPressed =()=>{
+        console.warn("onTermsOfUsePressed")
     }
   return (
+  <ScrollView showsVerticalScrollIndicator={false} >
     <View style={styles.root} >
-    <ScrollView showsVerticalScrollIndicator={false} >
+    <Text style={styles.title}>Create an account</Text>
      <Image source={Logo}
       style={[styles.logo,{height:height*0.3}]} 
       resizeMode='contain'/>
@@ -38,41 +35,41 @@ const SignupScreen = () => {
        setValue={setUserName}
        secureTextEntry={false}
       />
+       <CustomInput
+       placeholder="email"
+       value={email}
+       setValue={setEmail}
+       secureTextEntry={false}
+      />
      <CustomInput
        placeholder="password"
        value={password}
        setValue={setPassword}
        secureTextEntry={true}
       />
-      <CustomButton text="Sign In" 
-       onPress={onSignInPressed}
-       />
-      <CustomButton 
-      text="Forgot Password" 
-      onPress={onForgotPasswordPressed}
-       type="TERCERY" />
-      <CustomButton
-       text="Sign In With Facebook"
-        onPress={onSignInFacebook}
-        bgColor="#E7EAF4"
-       fgColor="#4765A9"
-         /> 
-      <CustomButton text="Sign In With Google"
-       onPress={onSignInGoogle}
-       bgColor="#FAE9EA"
-       fgColor="#DD4D44"
-        /> 
-      <CustomButton text="Sign In With Apple" 
-      onPress={onSignInApple} 
-      bgColor="#e3e3e3"
-       fgColor="#363636"
+       <CustomInput
+       placeholder="confirm password"
+       value={confirmPassword}
+       setValue={setConfirmPassword}
+       secureTextEntry={true}
       />
+      <CustomButton text="Sign In" 
+       onPress={onRegisterPressed}
+       />
+       <Text>
+        By registering, you confirm that you accept our new password
+        <Text style={styles.link} onPress={onTermsOfUsePressed}>Terms of Use</Text>
+        and <Text style={styles.link} onPress={onPrivacyPressed}>Privacy Policy</Text>
+       </Text>
+
+        <SocialSignInButton />
            <CustomButton 
-      text="You dont have account? create one" 
-      onPress={onSignUpPressed}
+      text="You have account? Sign in" 
+      onPress={onSignInPressed}
        type="TERCERY" />
+         </View>
     </ScrollView>
-    </View>
+  
   );
 };
   const styles = StyleSheet.create({
@@ -85,6 +82,12 @@ const SignupScreen = () => {
       maxWidth:300,
       height:100
     },
+    title:{
+        fontSize:'24px',
+        fontWeight:"bold",
+        color:"#051C60",
+        margin:10,
+    }
   });
   
 
