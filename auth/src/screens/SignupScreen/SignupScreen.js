@@ -4,17 +4,22 @@ import Logo from '../../../assets/images/images.jpg'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import SocialSignInButton from '../../components/SocialSignInButtons/SocialSignInButton';
+import {useNavigation} from "@react-navigation/native"
+
 const SignupScreen = () => {
+const navigation = useNavigation();
     const height = useWindowDimensions();
-    const [userName,setUserName] = useState('');
-    const [password,setPassword] = useState('');
-    const [confirmPassword,setConfirmPassword] = useState('');
-    const [email,setEmail] = useState('');
+   const {handleSubmit,control,watch}=useForm({defaultValue:{
+    username:"Default userName",
+   }});
+     const pwd= watch("password")
     const onRegisterPressed =()=>{
         console.warn("pressed")
+        navigation.navigate("ConfirmEmail")
     }
     const onSignInPressed =()=>{
         console.warn("pressed")
+        navigation.navigate("SignIn")
     }
     const onTermsOfUsePressed =()=>{
         console.warn("onTermsOfUsePressed")
@@ -22,7 +27,9 @@ const SignupScreen = () => {
     const onPrivacyPressed =()=>{
         console.warn("onTermsOfUsePressed")
     }
-  return (
+    const Email_regex="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/."
+    
+    return (
   <ScrollView showsVerticalScrollIndicator={false} >
     <View style={styles.root} >
     <Text style={styles.title}>Create an account</Text>
@@ -30,31 +37,51 @@ const SignupScreen = () => {
       style={[styles.logo,{height:height*0.3}]} 
       resizeMode='contain'/>
      <CustomInput
-       placeholder="user name"
-       value={userName}
-       setValue={setUserName}
-       secureTextEntry={false}
+       placeholder="username"
+       name="username"
+       control={control}
+       rules={{required:"Username is required",
+       minLength:{
+        value:3,
+       message:"Username should be at least 3 characters"
+       },
+       maxLength:{
+        value:26,
+        message:"Username should be max 26 characters"
+       }
+       }}
       />
        <CustomInput
        placeholder="email"
-       value={email}
-       setValue={setEmail}
-       secureTextEntry={false}
+       name="email"
+       control={control}
+       rules={{required:"Email is required",
+       pattern:{value: Email_regex,message:"Email is invalid"}
+       }}
       />
      <CustomInput
        placeholder="password"
-       value={password}
-       setValue={setPassword}
+       control={control}
+       rules={{
+        required:"Password is required",
+       minLength:{
+        value:3,
+       message:"Password should be at least 3 characters"
+       },
+      }}
        secureTextEntry={true}
       />
        <CustomInput
        placeholder="confirm password"
-       value={confirmPassword}
-       setValue={setConfirmPassword}
+       name="password-repeat"
+       control={control}
+       rules={{
+        validate: value => value === pwd || "password do not match",
+       }}
        secureTextEntry={true}
       />
       <CustomButton text="Sign In" 
-       onPress={onRegisterPressed}
+       onPress={handleSubmit(onRegisterPressed)}
        />
        <Text>
         By registering, you confirm that you accept our new password

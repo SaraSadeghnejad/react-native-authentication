@@ -3,17 +3,20 @@ import React, { useState } from 'react';
 import Logo from '../../../assets/images/images.jpg'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import SocialSignInButton from '../../components/SocialSignInButtons/SocialSignInButton';
+import {useNavigation} from "@react-navigation/native"
 const ConfirmEmailScreen = () => {
-    const [code,setCode] = useState('');
+   const navigation = useNavigation() 
+  const [code,setCode] = useState('');
     const onConfirmPressed =()=>{
         console.warn("pressed")
-    }
+       navigation.navigate("Home")
+      }
     const onResendPressed =()=>{
       console.warn("pressed")
   }
   const onSignInPressed =()=>{
     console.warn("pressed")
+    navigation.navigate("SignIn")
 } 
   return (
   <ScrollView showsVerticalScrollIndicator={false} >

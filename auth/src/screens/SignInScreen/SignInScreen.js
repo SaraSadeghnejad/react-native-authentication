@@ -1,31 +1,26 @@
-import { View,  Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+
+import { TextInput,View,  Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Logo from '../../../assets/images/images.jpg'
-import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import {useNavigation} from "@react-navigation/native"
+import SocialSignInButton from '../../components/SocialSignInButtons/SocialSignInButton';
+import { useForm } from 'react-hook-form';
 const SignInScreen = () => {
-    const height = useWindowDimensions();
-    const [userName,setUserName] = useState('');
-    const [password,setPassword] = useState('');
+  const navigation = useNavigation(); 
+  const height = useWindowDimensions();
+    // const [userName,setUserName] = useState('');
+    // const [password,setPassword] = useState('');
     const onSignInPressed =()=>{
-        console.warn("pressed")
-    }
-    const onSignInFacebook =()=>{
-        console.warn("pressed")
-    }
-    const onSignInGoogle =()=>{
-        console.warn("pressed")
-    } 
-    const onSignInApple =()=>{
-        console.warn("pressed")
-    }
-
+      navigation.navigate("Home")
+      }
     const onForgotPasswordPressed =()=>{
-        console.warn("pressed")
-    }
+        navigation.navigate("ForgotPassword")
+      }
     const onSignUpPressed =()=>{
-        console.warn("pressed")
+      navigation.navigate("Signup")
     }
+    const {handlesubmit,control,formState:{errors}} = useForm()
   return (
   <ScrollView showsVerticalScrollIndicator={false} >
     <View style={styles.root} >
@@ -34,40 +29,31 @@ const SignInScreen = () => {
       style={[styles.logo,{height:height*0.3}]} 
       resizeMode='contain'/>
      <CustomInput
+       name="username"
        placeholder="user name"
-       value={userName}
-       setValue={setUserName}
-       secureTextEntry={false}
+       control={control}
+       rules={{required:"Username is required"}}
       />
      <CustomInput
+       name="password"
        placeholder="password"
-       value={password}
-       setValue={setPassword}
+       control={control}
        secureTextEntry={true}
+       rules={{required:"Password is required",
+       minLength:{value:3,
+        message:"Password should be minimum 3 characters long"
+       }, 
+       }}
       />
+      
       <CustomButton text="Sign In" 
-       onPress={onSignInPressed}
+       onPress={handlesubmit(onSignInPressed)}
        />
       <CustomButton 
       text="Forgot Password" 
       onPress={onForgotPasswordPressed}
        type="TERCERY" />
-      <CustomButton
-       text="Sign In With Facebook"
-        onPress={onSignInFacebook}
-        bgColor="#E7EAF4"
-       fgColor="#4765A9"
-         /> 
-      <CustomButton text="Sign In With Google"
-       onPress={onSignInGoogle}
-       bgColor="#FAE9EA"
-       fgColor="#DD4D44"
-        /> 
-      <CustomButton text="Sign In With Apple" 
-      onPress={onSignInApple} 
-      bgColor="#e3e3e3"
-       fgColor="#363636"
-      />
+       <SocialSignInButton />
            <CustomButton 
       text="You dont have account? create one" 
       onPress={onSignUpPressed}
